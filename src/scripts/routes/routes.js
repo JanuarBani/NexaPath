@@ -1,7 +1,7 @@
 import HomePage from '../pages/home/home-page';
 import AboutPage from '../pages/about/about-page';
 import NotFoundPage from '../pages/not-found/not-found-page';
-import KarirPage from '../pages/prediksi-karir/prediksi-career';
+import KarirPage from '../../../../../prediksi-career';
 import JurusanPage from '../pages/prediksi-major/prediksi-jurusan';
 
 const routes = {

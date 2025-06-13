@@ -8,30 +8,26 @@ const ENDPOINTS = {
   JURUSAN: `http://127.0.0.1:3000/recommend`,
 };
 
+// Frontend
 export async function predictCareer(formData) {
   try {
-    const response = await fetch('https://web-production-9a610.up.railway.app/predict', {
+    const response = await fetch('http://localhost:5000/api/prediksi', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData), // Kirim object, bukan array
+      credentials: 'include',
+      body: JSON.stringify(formData),
     });
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-
-    if (data.error) {
-      throw new Error(data.message || 'Prediction error from server');
-    }
-
-    return data;
+    return await response.json();
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('API Error!', error);
     throw error;
   }
 }

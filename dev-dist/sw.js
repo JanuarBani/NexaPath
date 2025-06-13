@@ -20,21 +20,23 @@ if (!self.define) {
   let nextDefineUri;
 
   const singleRequire = (uri, parentUri) => {
-    uri = new URL(uri + '.js', parentUri).href;
-    return (
-      registry[uri] ||
-      new Promise((resolve) => {
-        if ('document' in self) {
-          const script = document.createElement('script');
-          script.src = uri;
-          script.onload = resolve;
-          document.head.appendChild(script);
-        } else {
-          nextDefineUri = uri;
-          importScripts(uri);
-          resolve();
-        }
-      }).then(() => {
+    uri = new URL(uri + ".js", parentUri).href;
+    return registry[uri] || (
+      
+        new Promise(resolve => {
+          if ("document" in self) {
+            const script = document.createElement("script");
+            script.src = uri;
+            script.onload = resolve;
+            document.head.appendChild(script);
+          } else {
+            nextDefineUri = uri;
+            importScripts(uri);
+            resolve();
+          }
+        })
+      
+      .then(() => {
         let promise = registry[uri];
         if (!promise) {
           throw new Error(`Module ${uri} didn’t register its module`);
@@ -45,29 +47,27 @@ if (!self.define) {
   };
 
   self.define = (depsNames, factory) => {
-    const uri =
-      nextDefineUri || ('document' in self ? document.currentScript.src : '') || location.href;
+    const uri = nextDefineUri || ("document" in self ? document.currentScript.src : "") || location.href;
     if (registry[uri]) {
       // Module is already loading or loaded.
       return;
     }
     let exports = {};
-    const require = (depUri) => singleRequire(depUri, uri);
+    const require = depUri => singleRequire(depUri, uri);
     const specialDeps = {
       module: { uri },
       exports,
-      require,
+      require
     };
-    registry[uri] = Promise.all(
-      depsNames.map((depName) => specialDeps[depName] || require(depName)),
-    ).then((deps) => {
+    registry[uri] = Promise.all(depsNames.map(
+      depName => specialDeps[depName] || require(depName)
+    )).then(deps => {
       factory(...deps);
       return exports;
     });
   };
 }
-define(['./workbox-ce4f0d5f'], function (workbox) {
-  'use strict';
+define(['./workbox-ce4f0d5f'], (function (workbox) { 'use strict';
 
   self.skipWaiting();
   workbox.clientsClaim();
@@ -77,56 +77,35 @@ define(['./workbox-ce4f0d5f'], function (workbox) {
    * requests for URLs in the manifest.
    * See https://goo.gl/S9QRab
    */
-  workbox.precacheAndRoute(
-    [
-      {
-        url: 'registerSW.js',
-        revision: '3ca0b8505b4bec776b69afdba2768812',
-      },
-      {
-        url: 'index.html',
-        revision: '0.mooqbf42kh',
-      },
-    ],
-    {},
-  );
+  workbox.precacheAndRoute([{
+    "url": "registerSW.js",
+    "revision": "3ca0b8505b4bec776b69afdba2768812"
+  }, {
+    "url": "index.html",
+    "revision": "0.s6eqcreis6o"
+  }], {});
   workbox.cleanupOutdatedCaches();
-  workbox.registerRoute(
-    new workbox.NavigationRoute(workbox.createHandlerBoundToURL('index.html'), {
-      allowlist: [/^\/$/],
-    }),
-  );
-  workbox.registerRoute(
-    /^https:\/\/cdn\.tailwindcss\.com/,
-    new workbox.CacheFirst({
-      cacheName: 'tailwind-cache',
-      plugins: [
-        new workbox.ExpirationPlugin({
-          maxEntries: 10,
-          maxAgeSeconds: 604800,
-        }),
-        new workbox.CacheableResponsePlugin({
-          statuses: [0, 200],
-        }),
-      ],
-    }),
-    'GET',
-  );
-  workbox.registerRoute(
-    /^https:\/\/cdnjs\.cloudflare\.com/,
-    new workbox.CacheFirst({
-      cacheName: 'font-awesome-cache',
-      plugins: [
-        new workbox.ExpirationPlugin({
-          maxEntries: 10,
-          maxAgeSeconds: 604800,
-        }),
-        new workbox.CacheableResponsePlugin({
-          statuses: [0, 200],
-        }),
-      ],
-    }),
-    'GET',
-  );
-});
+  workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
+    allowlist: [/^\/$/]
+  }));
+  workbox.registerRoute(/^https:\/\/cdn\.tailwindcss\.com/, new workbox.CacheFirst({
+    "cacheName": "tailwind-cache",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 10,
+      maxAgeSeconds: 604800
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [0, 200]
+    })]
+  }), 'GET');
+  workbox.registerRoute(/^https:\/\/cdnjs\.cloudflare\.com/, new workbox.CacheFirst({
+    "cacheName": "font-awesome-cache",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 10,
+      maxAgeSeconds: 604800
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [0, 200]
+    })]
+  }), 'GET');
+
+}));
 //# sourceMappingURL=sw.js.map
