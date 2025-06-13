@@ -32,33 +32,30 @@ export async function predictCareer(formData) {
   }
 }
 
-export async function predictMajor(scores, testType) {
-  try {
-    const response = await fetch(ENDPOINTS.JURUSAN, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        scores: scores, // Objek skor lengkap
-        test_type: testType, // 'science' atau 'humanities'
-      }),
-    });
+/**
+ * Fungsi untuk memanggil API prediksi jurusan
+ * @param {number[]} inputArray - Array 8 angka sesuai fitur skor UTBK
+ * @returns {Promise<{ error: boolean, recommendation: string, confidence: number }>}
+ */
+export async function predictMajor(data) {
+  const response = await fetch('http://localhost:5000/api/prediksi-jurusan', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    if (data.error) {
-      throw new Error(data.message || 'Prediction error from server');
-    }
-
-    return data;
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error;
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`HTTP error ${response.status}: ${text}`);
   }
+
+  const result = await response.json();
+
+  return result;
 }
+
+
+
+

@@ -1,5 +1,6 @@
 import { predictMajor } from '../../data/api.js';
 
+
 export default class JurusanPage {
   async render() {
     return `
@@ -127,7 +128,7 @@ function setupTKAInputHandler() {
   });
 }
 
-function setupFormSubmission() {
+async function setupFormSubmission() {
   const form = document.getElementById('predictionForm');
   const resultPage = document.getElementById('resultPage');
   const resultContainer = document.getElementById('predictionResult');
@@ -141,6 +142,12 @@ function setupFormSubmission() {
     const nama = formData.get('nama');
     const kelompok = formData.get('kelompok_ujian');
 
+    if (!['saintek', 'soshum'].includes(kelompok)) {
+      alert('Pilih kelompok ujian yang valid.');
+      return;
+    }
+
+    // TPS (wajib)
     const scores = {
       score_kpu: parseFloat(formData.get('kpu')),
       score_kua: parseFloat(formData.get('kua')),
@@ -148,7 +155,7 @@ function setupFormSubmission() {
       score_kmb: parseFloat(formData.get('kmb')),
     };
 
-    // Tambahkan nilai TKA sesuai kelompok
+    // TKA (sesuai kelompok)
     if (kelompok === 'saintek') {
       scores.score_mat_tka = parseFloat(formData.get('mat'));
       scores.score_fis = parseFloat(formData.get('fis'));
@@ -162,42 +169,24 @@ function setupFormSubmission() {
       scores.score_eko = parseFloat(formData.get('eko'));
     }
 
-    // Validasi semua skor harus number
-    const valid = Object.values(scores).every((v) => typeof v === 'number' && !isNaN(v));
-    if (!valid) {
-      alert('Pastikan semua nilai telah diisi dengan benar.');
+    // Validasi angka
+    const allValid = Object.values(scores).every((v) => typeof v === 'number' && !isNaN(v));
+    if (!allValid) {
+      alert('Pastikan semua nilai telah diisi dan berupa angka.');
       return;
     }
 
-    try {
-      const testType = kelompok === 'saintek' ? 'science' : 'humanities';
-      const result = await predictMajor(scores, testType);
+    const testType = kelompok === 'saintek' ? 'science' : 'humanities';
 
-      // Tampilkan hasil rekomendasi (top 5 atau sesuai response)
-      if (result.status === 'success') {
-        resultContainer.innerHTML = `
+    try {
+      const result = await predictMajor({ scores, test_type: testType });
+
+      resultContainer.innerHTML = `
         <p>Nama: <strong>${nama}</strong></p>
         <p>Kelompok Ujian: <strong>${kelompok}</strong></p>
-        <p><strong>Rekomendasi Jurusan:</strong></p>
-        <ul class="mt-2 space-y-2">
-          ${result.recommendations
-            .map(
-              (rec) => `
-            <li class="border-b border-gray-300 pb-2">
-              <strong>${rec.major_name}</strong> di <strong>${rec.university_name}</strong><br/>
-              Peluang Lulus: <span class="text-blue-600">${(rec.prob_pass * 100).toFixed(2)}%</span><br/>
-              Kuota UTBK: ${rec.utbk_capacity}
-            </li>
-          `,
-            )
-            .join('')}
-        </ul>
+        <p><strong>Rekomendasi Jurusan:</strong> ${result.recommendation}</p>
+        <p><strong>Confidence:</strong> ${(result.confidence * 100).toFixed(2)}%</p>
       `;
-      } else {
-        resultContainer.innerHTML = `
-        <p>${result.message}</p>
-      `;
-      }
 
       form.classList.add('hidden');
       resultPage.classList.remove('hidden');
