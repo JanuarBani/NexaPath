@@ -25,7 +25,7 @@ export default class HomePage {
               <span class="font-medium text-blue-600 dark:text-blue-400">bakat</span>, dan potensi terbaik dalam dirimu.
             </p>
           </header>
-          <a href="#/prediksi-karier" class="neon-btn inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full transition">
+          <a href="#/karier" class="neon-btn inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full transition">
             <i class="fas fa-bullseye mr-2"></i> Prediksi Karier Kamu
           </a>
         </div>
@@ -55,7 +55,7 @@ export default class HomePage {
         <img src="/images/wisuda.jpg" alt="Pilih Jurusan" class="w-full h-auto object-cover" />
       </div>
 
-      <a href="#/prediksi-jurusan"
+      <a href="#/jurusan"
          class="neon-btn inline-block mt-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full transition">
         <i class="fas fa-graduation-cap mr-2"></i> Prediksi Jurusan Kamu
       </a>

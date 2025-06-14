@@ -1,4 +1,4 @@
-import { predictCareer } from './src/fe/src/scripts/data/api.js';
+import { predictCareer } from '../../data/api.js';
 
 export default class KarirPresenter {
   #view;
