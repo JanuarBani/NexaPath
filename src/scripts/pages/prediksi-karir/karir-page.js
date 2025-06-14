@@ -4,7 +4,7 @@ export default class KarirPage {
   #presenter = null;
 
   async render() {
-  return `
+    return `
     <div class="w-full min-h-screen px-2 md:px-3 lg:px-4 py-4 bg-white dark:bg-gray-900">
       <section class="neon-box w-full rounded-xl px-3 md:px-4 py-5 transition-colors duration-300">
         <header class="text-center mb-4">
@@ -85,8 +85,7 @@ export default class KarirPage {
       </section>
     </div>
   `;
-}
-
+  }
 
   async afterRender() {
     this.#presenter = new KarirPresenter({
