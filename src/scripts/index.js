@@ -19,29 +19,29 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!content || !skipLinkButton) {
     if (!content) console.error("Elemen 'main-content' tidak ditemukan di DOM.");
     if (!skipLinkButton) console.error("Elemen 'skip-link' tidak ditemukan di DOM.");
-    return;
+    return; // Stop if essentials not found
   }
 
-  // Drawer toggle
+  // Drawer toggle elements
   const drawerButton = document.getElementById('drawer-button');
   const drawer = document.getElementById('mobile-drawer');
   const drawerClose = document.getElementById('drawer-close');
   const drawerOverlay = document.getElementById('drawer-overlay');
 
   function closeDrawer() {
-    drawer?.classList.add('-translate-x-full');
-    drawerOverlay?.classList.add('hidden');
+    if (drawer) drawer.classList.add('-translate-x-full');
+    if (drawerOverlay) drawerOverlay.classList.add('hidden');
   }
 
   drawerButton?.addEventListener('click', () => {
-    drawer?.classList.remove('-translate-x-full');
-    drawerOverlay?.classList.remove('hidden');
+    if (drawer) drawer.classList.remove('-translate-x-full');
+    if (drawerOverlay) drawerOverlay.classList.remove('hidden');
   });
 
   drawerClose?.addEventListener('click', closeDrawer);
   drawerOverlay?.addEventListener('click', closeDrawer);
 
-  // Theme toggle
+  // Theme toggle setup
   const themeToggle = document.getElementById('theme-toggle');
   const iconSun = document.getElementById('icon-sun');
   const iconMoon = document.getElementById('icon-moon');
@@ -73,17 +73,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     setThemeIcons(isDark);
   });
 
-  // Inisialisasi App
+  // Initialize App
   const app = new App({ content, skipLinkButton });
   await registerServiceWorker();
   await app.renderPage();
 
-  // On hashchange
+  // Render page on hash change
   window.addEventListener('hashchange', async () => {
     await app.renderPage();
   });
 
-  // Sticky header effect
+  // Sticky header effect on scroll
   const header = document.querySelector('header');
   if (header) {
     window.addEventListener('scroll', () => {
@@ -91,3 +91,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 });
+
+// Scroll animation using Intersection Observer
+export function setupScrollAnimation() {
+  const observer = new IntersectionObserver(
+    (entries, observerInstance) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-up');
+          entry.target.classList.remove('opacity-0');
+          observerInstance.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 },
+  );
+
+  document.querySelectorAll('[data-animate="slide-up"]:not(.animate-slide-up)').forEach((el) => {
+    observer.observe(el);
+  });
+
+  return observer; // kembalikan observer agar bisa disconnect nanti
+}

@@ -37,6 +37,7 @@ export default class KarirPresenter {
 
       try {
         const result = await predictCareer(data);
+        console.log(result);
         this.#view.showResult({
           career: result.predicted_job || 'Tidak diketahui',
           confidence: (result.confidence * 100).toFixed(1),

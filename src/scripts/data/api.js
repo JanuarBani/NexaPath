@@ -3,15 +3,10 @@ import CONFIG from '../config';
 export const VAPID_PUBLIC_KEY =
   'BCCs2eonMI-6H2ctvFaWg-UYdDv387Vno_bzUzALpB442r2lCnsHmtrx8biyPi_E-1fSGABK_Qs_GlvPoJJqxbk';
 
-// Endpoints untuk berbagai aksi
-const ENDPOINTS = {
-  JURUSAN: `http://127.0.0.1:3000/recommend`,
-};
-
 // Frontend
 export async function predictCareer(formData) {
   try {
-    const response = await fetch('http://localhost:5000/api/prediksi', {
+    const response = await fetch('https://hapi-backend.vercel.app/api/prediksi', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,6 +19,7 @@ export async function predictCareer(formData) {
       const errorData = await response.json();
       throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
     }
+    console.log(formData);
 
     return await response.json();
   } catch (error) {
@@ -38,7 +34,7 @@ export async function predictCareer(formData) {
  * @returns {Promise<{ error: boolean, recommendation: string, confidence: number }>}
  */
 export async function predictMajor(data) {
-  const response = await fetch('http://localhost:5000/api/prediksi-jurusan', {
+  const response = await fetch('https://hapi-backend.vercel.app/api/prediksi-jurusan', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -52,10 +48,16 @@ export async function predictMajor(data) {
   }
 
   const result = await response.json();
+  console.log('Response API predictMajor:', result);
+  if (!result || typeof result !== 'object' || !result.recommendations) {
+    throw new Error('Invalid response format from API');
+  }
+  if (!Array.isArray(result.recommendations)) {
+    throw new Error('Recommendations should be an array');
+  }
+  if (result.recommendations.length === 0) {
+    throw new Error('No recommendations found');
+  }
 
   return result;
 }
-
-
-
-

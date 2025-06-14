@@ -100,14 +100,21 @@ export function transitionHelper({ skipTransition = false, updateDOM }) {
     });
 
     return {
-      ready: Promise.resolve(),
+      ready: Promise.resolve().catch(() => {}), // agar selalu ada catch
       updateCallbackDone,
-      finished: updateCallbackDone,
+      finished: updateCallbackDone.catch(() => {}),
     };
   }
 
   const transition = document.startViewTransition(() => {
     updateDOM();
+  });
+
+  // Tangani error di ready agar tidak uncaught
+  transition.ready.catch((error) => {
+    if (error.name !== 'AbortError') {
+      console.error('Error in transition.ready:', error);
+    }
   });
 
   transition.ready.then(() => {
@@ -121,11 +128,14 @@ export function transitionHelper({ skipTransition = false, updateDOM }) {
       if (newPage) newPage.classList.add('fade-in');
     })
     .catch((error) => {
-      console.error('Error during transition:', error);
+      if (error.name !== 'AbortError') {
+        console.error('Error during transition.finished:', error);
+      }
     });
 
   return transition;
 }
+
 export function isServiceWorkerAvailable() {
   return 'serviceWorker' in navigator;
 }

@@ -4,59 +4,89 @@ export default class KarirPage {
   #presenter = null;
 
   async render() {
-    return `
-      <div class="max-w-4xl mx-auto px-4 py-12">
-        <div class="neon-box rounded-xl p-8">
-          <h2 class="text-3xl font-bold text-blue-700 dark:text-blue-300 mb-4 text-center">Rekomendasi Karier & Jurusan</h2>
-          <p class="text-gray-700 dark:text-gray-300 mb-8 text-center">
+  return `
+    <div class="w-full min-h-screen px-2 md:px-3 lg:px-4 py-4 bg-white dark:bg-gray-900">
+      <section class="neon-box w-full rounded-xl px-3 md:px-4 py-5 transition-colors duration-300">
+        <header class="text-center mb-4">
+          <h2 class="text-xl md:text-2xl font-bold text-blue-700 dark:text-blue-300 mb-2">
+            Rekomendasi Karier & Jurusan
+          </h2>
+          <p class="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-snug">
             Jawab pertanyaan berikut untuk mendapatkan rekomendasi karier berdasarkan minat dan nilai akademikmu.
           </p>
+        </header>
 
-          <form id="recommendationForm" class="space-y-6">
-            <div>
-              <label for="usia" class="block font-medium mb-1">Usia:</label>
-              <input type="number" id="usia" name="usia" required class="neon-input w-full p-2 rounded">
-            </div>
-
-            <div>
-              <h3 class="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-2">Kecerdasan Majemuk (0 - 20)</h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                ${this.renderMultipleIntelligences()}
-              </div>
-            </div>
-
-            <div>
-              <h3 class="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-2">Nilai Akademik (0 - 100)</h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                ${this.renderAcademicScores()}
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label for="weekly_self_study_hours" class="block mb-1">Jam Belajar Mandiri per Minggu:</label>
-                <input type="number" id="weekly_self_study_hours" name="weekly_self_study_hours" required class="neon-input w-full p-2 rounded">
-              </div>
-              <div>
-                <label for="absence_days" class="block mb-1">Jumlah Hari Tidak Hadir:</label>
-                <input type="number" id="absence_days" name="absence_days" required class="neon-input w-full p-2 rounded">
-              </div>
-            </div>
-
-            <div class="text-center mt-6">
-              <button type="submit" class="neon-btn px-6 py-2 rounded font-semibold">Dapatkan Rekomendasi</button>
-            </div>
-          </form>
-
-          <div id="resultPage" class="hidden mt-10 text-center">
-            <h3 class="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-4">Hasil Rekomendasi</h3>
-            <div id="recommendationResult" class="text-lg mb-4"></div>
-            <button id="resetFormButton" class="neon-btn px-6 py-2 rounded font-semibold">Isi Form Lagi</button>
+        <form id="recommendationForm" class="space-y-4 w-full">
+          <!-- Usia -->
+          <div>
+            <label for="usia" class="block text-sm font-medium mb-1">Usia:</label>
+            <input type="number" id="usia" name="usia" required
+                   class="neon-input w-full p-2 rounded text-sm" />
           </div>
+
+          <!-- Kecerdasan Majemuk -->
+          <div>
+            <h3 class="text-sm md:text-base font-semibold text-blue-600 dark:text-blue-400 mb-2">
+              Kecerdasan Majemuk (0 - 20)
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              ${this.renderMultipleIntelligences()}
+            </div>
+          </div>
+
+          <!-- Nilai Akademik -->
+          <div>
+            <h3 class="text-sm md:text-base font-semibold text-blue-600 dark:text-blue-400 mb-2">
+              Nilai Akademik (0 - 100)
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              ${this.renderAcademicScores()}
+            </div>
+          </div>
+
+          <!-- Jam Belajar & Absensi -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label for="weekly_self_study_hours" class="block text-sm mb-1">
+                Jam Belajar Mandiri per Minggu:
+              </label>
+              <input type="number" id="weekly_self_study_hours" name="weekly_self_study_hours" required
+                     class="neon-input w-full p-2 rounded text-sm" />
+            </div>
+            <div>
+              <label for="absence_days" class="block text-sm mb-1">
+                Jumlah Hari Tidak Hadir:
+              </label>
+              <input type="number" id="absence_days" name="absence_days" required
+                     class="neon-input w-full p-2 rounded text-sm" />
+            </div>
+          </div>
+
+          <!-- Tombol Submit -->
+          <div class="text-center mt-3">
+            <button type="submit"
+                    class="neon-btn px-4 py-2 text-sm font-semibold rounded-full">
+              Dapatkan Rekomendasi
+            </button>
+          </div>
+        </form>
+
+        <!-- Hasil -->
+        <div id="resultPage" class="hidden mt-8 text-center">
+          <h3 class="text-lg md:text-xl font-bold text-blue-700 dark:text-blue-300 mb-3">
+            Hasil Rekomendasi
+          </h3>
+          <div id="recommendationResult" class="text-sm md:text-base mb-3"></div>
+          <button id="resetFormButton"
+                  class="neon-btn px-4 py-2 text-sm font-semibold rounded-full">
+            Isi Form Lagi
+          </button>
         </div>
-      </div>
-    `;
-  }
+      </section>
+    </div>
+  `;
+}
+
 
   async afterRender() {
     this.#presenter = new KarirPresenter({

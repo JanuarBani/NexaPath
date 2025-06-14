@@ -2,11 +2,14 @@ import routes from '../routes/routes';
 import { getActiveRoute } from '../routes/url-parser';
 import { isServiceWorkerAvailable, setupSkipToContent, transitionHelper } from '../utils';
 import NotFoundPage from './not-found/not-found-page';
+import { setupScrollAnimation } from '../index'; // pastikan ini diimport sesuai lokasi kamu
 
 class App {
   #content;
   #skipLinkButton;
   #activePage = null;
+  #isRendering = false; // Flag untuk menghindari render tumpang tindih
+  #scrollObserver = null;
 
   constructor({ content, skipLinkButton }) {
     this.#content = content;
@@ -18,7 +21,6 @@ class App {
   async #setupPushNotification() {
     let subscribeButton = document.getElementById('subscribe-button');
 
-    // Pastikan tombol ada dan punya parentNode sebelum replace
     if (!subscribeButton || !subscribeButton.parentNode) return;
 
     const isSubscribed = await isCurrentPushSubscriptionAvailable();
@@ -34,7 +36,7 @@ class App {
 
       subscribeButton.addEventListener('click', async () => {
         await unsubscribe();
-        this.#setupPushNotification();
+        await this.#setupPushNotification();
       });
     } else {
       subscribeButton.classList.remove('btn-secondary', 'text-white');
@@ -43,77 +45,94 @@ class App {
 
       subscribeButton.addEventListener('click', async () => {
         await subscribe();
-        this.#setupPushNotification();
+        await this.#setupPushNotification();
       });
     }
   }
 
   async renderPage() {
-    const url = getActiveRoute();
-    const pageFactory = routes[url];
+    if (this.#isRendering) return; // Cegah render jika masih proses render sebelumnya
+    this.#isRendering = true;
 
-    let page;
-    if (!pageFactory || typeof pageFactory !== 'function') {
-      page = new NotFoundPage();
-    } else {
-      page = pageFactory();
-    }
+    try {
+      const url = getActiveRoute();
+      const pageFactory = routes[url];
 
-    if (this.#activePage?.destroy) {
-      this.#activePage.destroy();
-    }
-
-    this.#activePage = page;
-    if (page === null) {
-      // Tidak render apa pun jika page null (misalnya karena redirect)
-      return;
-    }
-
-    if (typeof page.render !== 'function') {
-      this.#content.innerHTML = '<p class="text-danger">Halaman tidak valid.</p>';
-      return;
-    }
-
-    const html = await page.render();
-
-    const previousPage = document.querySelector('.active');
-    if (previousPage) {
-      previousPage.classList.add('inactive');
-      previousPage.classList.remove('active');
-    }
-
-    const transition = transitionHelper({
-      updateDOM: () => {
-        this.#content.innerHTML = html;
-
-        const newPage = document.querySelector('.page');
-        if (newPage) {
-          newPage.classList.add('active');
-          newPage.classList.remove('inactive');
-        }
-      },
-    });
-
-    transition.ready.catch((error) => {
-      if (error.name !== 'AbortError') {
-        console.error('Transition Ready Error:', error);
+      let page;
+      if (!pageFactory || typeof pageFactory !== 'function') {
+        page = new NotFoundPage();
+      } else {
+        page = pageFactory();
       }
-    });
 
-    transition.updateCallbackDone
-      .then(() => {
+      if (this.#activePage?.destroy) {
+        this.#activePage.destroy();
+      }
+
+      this.#activePage = page;
+
+      if (page === null) {
+        // Tidak render apa pun jika page null (misalnya karena redirect)
+        return;
+      }
+
+      if (typeof page.render !== 'function') {
+        this.#content.innerHTML = '<p class="text-danger">Halaman tidak valid.</p>';
+        return;
+      }
+
+      const html = await page.render();
+
+      const previousPage = document.querySelector('.active');
+      if (previousPage) {
+        previousPage.classList.add('inactive');
+        previousPage.classList.remove('active');
+      }
+
+      const transition = transitionHelper({
+        updateDOM: () => {
+          this.#content.innerHTML = html;
+
+          // Disconnect observer lama agar tidak tumpang tindih
+          if (this.#scrollObserver) {
+            this.#scrollObserver.disconnect();
+          }
+
+          // Setup observer baru untuk animasi scroll
+          this.#scrollObserver = setupScrollAnimation();
+
+          const newPage = document.querySelector('.page');
+          if (newPage) {
+            newPage.classList.add('active');
+            newPage.classList.remove('inactive');
+          }
+        },
+      });
+
+      transition.ready.catch((error) => {
+        if (error.name !== 'AbortError') {
+          console.error('Transition Ready Error:', error);
+        }
+      });
+
+      try {
+        await transition.updateCallbackDone;
         scrollTo({ top: 0, behavior: 'instant' });
         page.afterRender();
 
         if (isServiceWorkerAvailable()) {
-          this.#setupPushNotification(); // dipanggil setelah DOM selesai
+          await this.#setupPushNotification(); // dipanggil setelah DOM selesai
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         if (error.name !== 'AbortError') {
           console.error('Transition Done Error:', error);
         }
-      });
+      }
+    } catch (error) {
+      console.error('Render Page Error:', error);
+    } finally {
+      this.#isRendering = false;
+    }
   }
 }
 

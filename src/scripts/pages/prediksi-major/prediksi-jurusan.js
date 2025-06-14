@@ -1,83 +1,84 @@
 import { predictMajor } from '../../data/api.js';
 
-
 export default class JurusanPage {
   async render() {
     return `
-    <div id="jurusan-section" class="w-full flex flex-col space-y-10 px-6 md:px-12 lg:px-20 py-16">
-      <section class="neon-box bg-white dark:bg-gray-800 rounded-3xl p-8 md:p-12">
-        <header class="mb-10 text-center">
-          <h2 class=" text-4xl font-bold text-blue-700 dark:text-blue-400 mb-4">Prediksi Jurusan Kuliah</h2>
-          <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
-            Isi data berikut untuk mendapatkan rekomendasi jurusan yang sesuai dengan minat dan kemampuan Anda.
-          </p>
-        </header>
+    <div id="jurusan-section" class="w-full flex justify-center px-4 md:px-8 lg:px-12 py-16 bg-white dark:bg-gray-900">
+      <div class="w-full max-w-screen-xl">
+        <section class="neon-box bg-white dark:bg-gray-800 rounded-3xl p-6 md:p-10 lg:p-12 shadow">
+          <header class="mb-10 text-center">
+            <h2 class="text-4xl font-bold text-blue-700 dark:text-blue-400 mb-4">Prediksi Jurusan Kuliah</h2>
+            <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
+              Isi data berikut untuk mendapatkan rekomendasi jurusan yang sesuai dengan minat dan kemampuan Anda.
+            </p>
+          </header>
 
-        <form id="predictionForm" class="max-w-4xl mx-auto space-y-6">
-          <!-- Nama -->
-          <div>
-            <label for="nama" class="block text-gray-800 dark:text-gray-100 font-medium">Nama Lengkap</label>
-            <input type="text" id="nama" name="nama" placeholder="Contoh: Risna Dwi" required
-              class="neon-input w-full rounded p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
-          </div>
+          <form id="predictionForm" class="max-w-4xl mx-auto space-y-6">
+            <!-- Nama -->
+            <div>
+              <label for="nama" class="block text-gray-800 dark:text-gray-100 font-medium">Nama Lengkap</label>
+              <input type="text" id="nama" name="nama" placeholder="Contoh: Risna Dwi" required
+                class="neon-input w-full rounded p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+            </div>
 
-          <!-- Kelompok Ujian -->
-          <div>
-            <label for="kelompok_ujian" class="block text-gray-800 dark:text-gray-100 font-medium">Kelompok Ujian</label>
-            <select id="kelompok_ujian" name="kelompok_ujian" required
-              class="neon-select w-full rounded p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
-              <option value="">Pilih Kelompok</option>
-              <option value="saintek">Saintek</option>
-              <option value="soshum">Soshum</option>
-            </select>
-          </div>
+            <!-- Kelompok Ujian -->
+            <div>
+              <label for="kelompok_ujian" class="block text-gray-800 dark:text-gray-100 font-medium">Kelompok Ujian</label>
+              <select id="kelompok_ujian" name="kelompok_ujian" required
+                class="neon-select w-full rounded p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+                <option value="">Pilih Kelompok</option>
+                <option value="saintek">Saintek</option>
+                <option value="soshum">Soshum</option>
+              </select>
+            </div>
 
-          <!-- TPS -->
-          <div>
-            <h4 class=" font-semibold text-blue-700 dark:text-blue-300">Nilai TPS (Tes Potensi Skolastik)</h4>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Wajib diisi oleh semua peserta.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-              <div>
-                <label class="block text-sm text-gray-800 dark:text-gray-100 mb-1">Penalaran Umum (KPU)</label>
-                <input type="number" name="kpu" placeholder="Contoh: 85" required class="neon-input p-2 rounded w-full">
-              </div>
-              <div>
-                <label class="block text-sm text-gray-800 dark:text-gray-100 mb-1">Kemampuan Kuantitatif (KUA)</label>
-                <input type="number" name="kua" placeholder="Contoh: 80" required class="neon-input p-2 rounded w-full">
-              </div>
-              <div>
-                <label class="block text-sm text-gray-800 dark:text-gray-100 mb-1">Pemahaman Umum (PPU)</label>
-                <input type="number" name="ppu" placeholder="Contoh: 78" required class="neon-input p-2 rounded w-full">
-              </div>
-              <div>
-                <label class="block text-sm text-gray-800 dark:text-gray-100 mb-1">Membaca & Menulis (KMB)</label>
-                <input type="number" name="kmb" placeholder="Contoh: 82" required class="neon-input p-2 rounded w-full">
+            <!-- TPS -->
+            <div>
+              <h4 class="font-semibold text-blue-700 dark:text-blue-300">Nilai TPS (Tes Potensi Skolastik)</h4>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Wajib diisi oleh semua peserta.</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                <div>
+                  <label class="block text-sm text-gray-800 dark:text-gray-100 mb-1">Penalaran Umum (KPU)</label>
+                  <input type="number" name="kpu" placeholder="Contoh: 85" required class="neon-input p-2 rounded w-full">
+                </div>
+                <div>
+                  <label class="block text-sm text-gray-800 dark:text-gray-100 mb-1">Kemampuan Kuantitatif (KUA)</label>
+                  <input type="number" name="kua" placeholder="Contoh: 80" required class="neon-input p-2 rounded w-full">
+                </div>
+                <div>
+                  <label class="block text-sm text-gray-800 dark:text-gray-100 mb-1">Pemahaman Umum (PPU)</label>
+                  <input type="number" name="ppu" placeholder="Contoh: 78" required class="neon-input p-2 rounded w-full">
+                </div>
+                <div>
+                  <label class="block text-sm text-gray-800 dark:text-gray-100 mb-1">Membaca & Menulis (KMB)</label>
+                  <input type="number" name="kmb" placeholder="Contoh: 82" required class="neon-input p-2 rounded w-full">
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- TKA -->
-          <div>
-            <h4 class=" font-semibold text-blue-700 dark:text-blue-300">Nilai TKA (Tes Kemampuan Akademik)</h4>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Muncul sesuai kelompok ujian.</p>
-            <div id="tkaSection" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-              <!-- Dinamis berdasarkan kelompok -->
+            <!-- TKA -->
+            <div>
+              <h4 class="font-semibold text-blue-700 dark:text-blue-300">Nilai TKA (Tes Kemampuan Akademik)</h4>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Muncul sesuai kelompok ujian.</p>
+              <div id="tkaSection" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                <!-- Dinamis berdasarkan kelompok -->
+              </div>
             </div>
-          </div>
 
-          <!-- Submit -->
-          <div class="text-center pt-4">
-            <button type="submit" class="neon-btn rounded px-6 py-2">Dapatkan Prediksi</button>
-          </div>
-        </form>
+            <!-- Submit -->
+            <div class="text-center pt-4">
+              <button type="submit" class="neon-btn rounded px-6 py-2">Dapatkan Prediksi</button>
+            </div>
+          </form>
 
-        <!-- Hasil -->
-        <div id="resultPage" class="hidden max-w-4xl mx-auto mt-10 p-6 neon-box rounded bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100">
-          <h3 class=" text-2xl font-bold mb-4 text-blue-700 dark:text-blue-300">Hasil Prediksi Jurusan</h3>
-          <div id="predictionResult"></div>
-          <button type="button" id="resetFormButton" class="neon-btn mt-4 rounded px-4 py-2">Isi Form Lagi</button>
-        </div>
-      </section>
+          <!-- Hasil -->
+          <div id="resultPage" class="hidden max-w-4xl mx-auto mt-10 p-6 neon-box rounded bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+            <h3 class="text-2xl font-bold mb-4 text-blue-700 dark:text-blue-300">Hasil Prediksi Jurusan</h3>
+            <div id="predictionResult"></div>
+            <button type="button" id="resetFormButton" class="neon-btn mt-4 rounded px-4 py-2">Isi Form Lagi</button>
+          </div>
+        </section>
+      </div>
     </div>
   `;
   }
@@ -181,12 +182,38 @@ async function setupFormSubmission() {
     try {
       const result = await predictMajor({ scores, test_type: testType });
 
+      console.log('Result dari API:', result);
+
+      if (!result || !Array.isArray(result.recommendations)) {
+        alert('Data rekomendasi jurusan tidak tersedia atau formatnya salah.');
+        return;
+      }
+
+      const daftar = result.recommendations
+        .map(
+          (r, i) => `
+  <li class="mb-4 p-3 border rounded shadow-sm">
+    <strong>${i + 1}. ${r.major_name}</strong> di <em>${r.university_name}</em><br>
+    <div class="w-full bg-gray-200 rounded-full h-4 mt-1 mb-2">
+      <div 
+        class="bg-blue-600 h-4 rounded-full transition-all duration-500" 
+        style="width: ${(r.prob_pass * 100).toFixed(2)}%"
+        aria-valuenow="${(r.prob_pass * 100).toFixed(2)}" 
+        aria-valuemin="0" aria-valuemax="100"
+      ></div>
+    </div>
+    <small>Peluang Lolos: <strong>${(r.prob_pass * 100).toFixed(2)}%</strong> | Kapasitas: <strong>${r.utbk_capacity}</strong></small>
+  </li>
+`,
+        )
+        .join('');
+
       resultContainer.innerHTML = `
-        <p>Nama: <strong>${nama}</strong></p>
-        <p>Kelompok Ujian: <strong>${kelompok}</strong></p>
-        <p><strong>Rekomendasi Jurusan:</strong> ${result.recommendation}</p>
-        <p><strong>Confidence:</strong> ${(result.confidence * 100).toFixed(2)}%</p>
-      `;
+  <p>Nama: <strong>${nama}</strong></p>
+  <p>Kelompok Ujian: <strong>${kelompok}</strong></p>
+  <h4 class="mt-4 font-semibold text-blue-700 dark:text-blue-300">Rekomendasi Jurusan:</h4>
+  <ul class="list-none ml-0 mt-2 p-0">${daftar}</ul>
+`;
 
       form.classList.add('hidden');
       resultPage.classList.remove('hidden');
