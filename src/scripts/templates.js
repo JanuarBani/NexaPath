@@ -118,8 +118,6 @@ export function loadFrontendTemplate() {
   `;
 }
 
-
-
 export function loadBackendTemplate() {
   return `
     <!-- Load Font Awesome CDN for icons -->
@@ -223,7 +221,6 @@ export function loadBackendTemplate() {
     </section>
   `;
 }
-
 
 export function loadMachineLearningTemplate() {
   return `
@@ -353,4 +350,3 @@ export function loadMachineLearningTemplate() {
     </section>
   `;
 }
-

@@ -13,8 +13,8 @@ export default class HomePage {
     <!-- Section: Intro Career -->
 <section aria-labelledby="career-heading"
          data-animate="slide-up"
-         class="neon-box bg-gradient-to-br from-white via-blue-50 to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 py-16 px-6 md:px-12 rounded-3xl transition-colors duration-500 opacity-0 will-change-transform">
-  <div class="flex flex-col-reverse md:flex-row items-center gap-12">
+         class="min-h-screen flex items-center neon-box bg-gradient-to-br from-white via-blue-50 to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 py-16 px-6 md:px-12 rounded-3xl transition-colors duration-500 opacity-0 will-change-transform">
+  <div class="flex flex-col-reverse md:flex-row items-center gap-12 w-full">
     <div class="flex-1 text-center md:text-left">
       <header>
         <h1 id="career-heading" class="text-4xl md:text-5xl font-extrabold text-blue-700 dark:text-blue-300 mb-6">
@@ -39,30 +39,31 @@ export default class HomePage {
   </div>
 </section>
 
-
-
     <!-- Section: Intro Jurusan -->
-    <section aria-labelledby="major-heading"
-             data-animate="slide-up"
-             class="neon-box bg-gray-50 dark:bg-gray-700 py-10 px-4 rounded-2xl text-center transition-colors duration-300 opacity-0 will-change-transform">
-      <header>
-        <h2 id="major-heading" class="text-2xl md:text-3xl font-bold text-blue-700 dark:text-blue-400 mb-3">
-          Pilih Jurusan Tepat
-        </h2>
-        <p class="text-gray-600 dark:text-gray-300 text-sm md:text-base max-w-2xl mx-auto mb-4">
-          Dapatkan rekomendasi jurusan kuliah yang mendukung tujuan kariermu dan sesuai dengan kepribadian serta kemampuanmu.
-        </p>
-      </header>
+<section aria-labelledby="major-heading"
+         data-animate="slide-up"
+         class="min-h-screen flex items-center justify-center neon-box bg-gray-50 dark:bg-gray-700 py-10 px-4 rounded-2xl text-center transition-colors duration-300 opacity-0 will-change-transform">
+  <div class="w-full max-w-2xl">
+    <header>
+      <h2 id="major-heading" class="text-2xl md:text-3xl font-bold text-blue-700 dark:text-blue-400 mb-3">
+        Pilih Jurusan Tepat
+      </h2>
+      <p class="text-gray-600 dark:text-gray-300 text-sm md:text-base mb-4">
+        Dapatkan rekomendasi jurusan kuliah yang mendukung tujuan kariermu dan sesuai dengan kepribadian serta kemampuanmu.
+      </p>
+    </header>
 
-      <div class="max-w-md mx-auto mb-4 rounded-xl overflow-hidden neon-box" style="box-shadow: 0 0 8px #2563eb;">
-        <img src="/images/wisuda.jpg" alt="Pilih Jurusan" class="w-full h-auto object-cover" />
-      </div>
+    <div class="mb-4 rounded-xl overflow-hidden neon-box" style="box-shadow: 0 0 8px #2563eb;">
+      <img src="/images/wisuda.jpg" alt="Pilih Jurusan" class="w-full h-auto object-cover" />
+    </div>
 
-      <a href="#/jurusan"
-         class="neon-btn inline-block mt-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full transition">
-        <i class="fas fa-graduation-cap mr-2"></i> Prediksi Jurusan Kamu
-      </a>
-    </section>
+    <a href="#/jurusan"
+       class="neon-btn inline-block mt-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full transition">
+      <i class="fas fa-graduation-cap mr-2"></i> Prediksi Jurusan Kamu
+    </a>
+  </div>
+</section>
+
 
     <!-- Section: Navigasi dan Konten -->
     <section aria-label="Navigasi dan Hasil Rekomendasi"
