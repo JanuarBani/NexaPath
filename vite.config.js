@@ -12,7 +12,6 @@ export default defineConfig({
         enabled: true,
       },
       includeAssets: [
-        'favicon.png',
         'apple-touch-icon.png',
         'masked-icon.svg',
         'images/icons/**',

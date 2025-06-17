@@ -22,21 +22,21 @@
       "purpose": "maskable"
     },
     {
-      "src": "images/icons/maskable-icon-x96.png",
+      "src": "images/icons/maskable-icon-x88.png",
       "type": "image/png",
-      "sizes": "96x96",
+      "sizes": "88x88",
       "purpose": "maskable"
     },
     {
-      "src": "images/icons/maskable-icon-x192.png",
+      "src": "images/icons/maskable-icon-x196.png",
       "type": "image/png",
-      "sizes": "192x192",
+      "sizes": "196x196",
       "purpose": "maskable"
     },
     {
-      "src": "images/icons/maskable-icon-x384.png",
+      "src": "images/icons/maskable-icon-x256.png",
       "type": "image/png",
-      "sizes": "384x384",
+      "sizes": "256x256",
       "purpose": "maskable"
     },
     {

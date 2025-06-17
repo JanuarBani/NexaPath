@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -50,7 +50,7 @@
   </head>
 
   <body
-    class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300 font-sans"
+    class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300 font-sans scroll-smooth"
   >
     <!-- Skip to Content -->
     <a
@@ -64,10 +64,19 @@
     <!-- Header -->
     <header class="bg-primary text-white shadow-md sticky top-0 z-40">
       <div class="container mx-auto flex items-center justify-between p-4">
-        <!-- Logo -->
-        <a href="#/" class="text-2xl font-extrabold tracking-wide hover:text-blue-200 transition">
-          NexaPath
+        <!-- Logo dengan gambar -->
+        <a
+          href="#/"
+          class="inline-block p-1 rounded bg-white/70 backdrop-blur-sm transition-all duration-300"
+          aria-label="NexaPath Home"
+        >
+          <img src="./public/favicon.png" alt="NexaPath Logo" class="h-12 w-auto max-h-[64px]" />
         </a>
+
+        <!-- Desktop Navigation Placeholder -->
+        <nav id="main-navbar" class="hidden lg:flex gap-6" aria-label="Main navigation">
+          <!-- Tambahkan link navigasi di sini -->
+        </nav>
 
         <!-- Theme Toggle -->
         <button
@@ -122,11 +131,6 @@
             <i class="fas fa-bars text-2xl"></i>
           </button>
         </div>
-
-        <!-- Desktop Navigation Placeholder -->
-        <nav id="main-navbar" class="hidden lg:flex gap-6" aria-label="Main navigation">
-          <!-- Tambahkan link navigasi di sini -->
-        </nav>
       </div>
     </header>
 
@@ -157,11 +161,81 @@
       <!-- Konten utama akan dimuat di sini -->
     </main>
 
+    <!-- FontAwesome CDN (pastikan ada di <head>) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-SzlrxWtv1jw3f+Zp6xzKD6M0XL1wdyZoAA1RtZ+p1VwNQQ8Eb3eV0jE3fZ9U1tR/+g+ZxHDKKbqfDUYbWgGTQA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <!-- Footer -->
-    <footer class="bg-gray-100 dark:bg-gray-800 py-6 mt-auto">
-      <div class="container mx-auto text-center text-gray-600 dark:text-gray-400 text-sm">
-        &copy; 2025 CityCare. All rights reserved.
+    <footer class="bg-gray-100 dark:bg-gray-900 border-t dark:border-gray-700 py-10 mt-auto">
+      <div class="max-w-screen-xl mx-auto px-4 md:px-8">
+        <!-- Action & Social -->
+        <div
+          class="flex flex-col md:flex-row items-center justify-between text-gray-600 dark:text-gray-400 text-sm gap-4"
+        >
+          <!-- Copyright -->
+          <div class="flex items-center space-x-2 text-center md:text-left">
+            <i class="fas fa-rocket text-indigo-600 dark:text-indigo-400"></i>
+            <span>
+              &copy; 2025 NexaPath. All rights reserved.
+              <br class="md:hidden" />
+              <strong class="text-indigo-500 dark:text-indigo-400">Kelompok ID: CC25-CF027</strong>
+            </span>
+          </div>
+
+          <!-- Feedback Button -->
+          <button
+            id="feedbackBtn"
+            class="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-indigo-500 dark:hover:bg-indigo-600 text-sm font-semibold px-4 py-2 rounded shadow-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            aria-label="Kirim Feedback"
+            type="button"
+          >
+            <i class="fas fa-comment-dots mr-2"></i> Feedback
+          </button>
+
+          <!-- Social Icons -->
+          <div class="flex space-x-4">
+            <a
+              href="https://twitter.com/"
+              target="_blank"
+              class="hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+            >
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a
+              href="https://facebook.com/"
+              target="_blank"
+              class="hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+            >
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a
+              href="https://github.com/JanuarBani/NexaPath.git"
+              target="_blank"
+              class="hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+            >
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
       </div>
+
+      <!-- Feedback Prompt Script -->
+      <script>
+        document.getElementById('feedbackBtn').addEventListener('click', () => {
+          const feedback = prompt('Apa pendapatmu tentang NexaPath?');
+          if (feedback && feedback.trim() !== '') {
+            alert('Terima kasih atas feedback kamu!');
+            console.log('Feedback:', feedback); // Ganti ini dengan fetch POST ke API jika diperlukan
+          } else {
+            alert('Feedback tidak boleh kosong.');
+          }
+        });
+      </script>
     </footer>
 
     <!-- Offline Notification -->

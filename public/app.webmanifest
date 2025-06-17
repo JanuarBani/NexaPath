@@ -10,9 +10,9 @@
   "theme_color": "#3b82f6",
   "icons": [
     {
-      "src": "images/icons/icon-x144.png",
+      "src": "images/icons/Icon-172.png",
       "type": "image/png",
-      "sizes": "144x144",
+      "sizes": "172x172",
       "purpose": "any"
     },
     {
@@ -22,21 +22,21 @@
       "purpose": "maskable"
     },
     {
-      "src": "images/icons/maskable-icon-x96.png",
+      "src": "images/icons/maskable-icon-x88.png",
       "type": "image/png",
-      "sizes": "96x96",
+      "sizes": "88x88",
       "purpose": "maskable"
     },
     {
-      "src": "images/icons/maskable-icon-x192.png",
+      "src": "images/icons/maskable-icon-x196.png",
       "type": "image/png",
-      "sizes": "192x192",
+      "sizes": "196x196",
       "purpose": "maskable"
     },
     {
-      "src": "images/icons/maskable-icon-x384.png",
+      "src": "images/icons/maskable-icon-x256.png",
       "type": "image/png",
-      "sizes": "384x384",
+      "sizes": "256x256",
       "purpose": "maskable"
     },
     {
@@ -86,26 +86,26 @@
   ],
   "shortcuts": [
     {
-      "name": "Laporan Baru",
-      "short_name": "Baru",
-      "description": "Membuat laporan kerusakan baru.",
-      "url": "/?source=pwa#/new",
+      "name": "Prediksi Jurusan",
+      "short_name": "Prediksi Jurusan",
+      "description": "Membuat Jurusan Baru.",
+      "url": "/?source=pwa#/jurusan",
       "icons": [
         {
-          "src": "images/icons/add-x512.png",
+          "src": "images/icons/prediksi1-icon512.png",
           "type": "image/png",
           "sizes": "512x512"
         }
       ]
     },
     {
-      "name": "Laporan Tersimpan",
-      "short_name": "Tersimpan",
-      "description": "Lihat daftar laporan tersimpan.",
-      "url": "/?source=pwa#/bookmark",
+      "name": "Prediksi Karier",
+      "short_name": "Prediksi Karier",
+      "description": "Membuat Karier Baru.",
+      "url": "/?source=pwa#/karir",
       "icons": [
         {
-          "src": "images/icons/bookmark-x512.png",
+          "src": "images/icons/prediksi2-icon-512.png",
           "type": "image/png",
           "sizes": "512x512"
         }

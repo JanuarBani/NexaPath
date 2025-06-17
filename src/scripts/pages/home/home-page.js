@@ -11,32 +11,35 @@ export default class HomePage {
   <div class="w-full max-w-screen-xl space-y-10">
 
     <!-- Section: Intro Career -->
-    <section aria-labelledby="career-heading"
-             data-animate="slide-up"
-             class="neon-box bg-gradient-to-br from-white via-blue-50 to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 py-10 px-4 md:px-6 rounded-2xl transition-colors duration-500 opacity-0 will-change-transform">
-      <div class="flex flex-col-reverse md:flex-row items-center gap-8">
-        <div class="flex-1 text-center md:text-left">
-          <header>
-            <h2 id="career-heading" class="text-3xl md:text-4xl font-extrabold text-blue-700 dark:text-blue-300 mb-4">
-              Karier Impianmu
-            </h2>
-            <p class="text-gray-700 dark:text-gray-200 text-sm md:text-base mb-6 leading-relaxed">
-              Temukan berbagai pilihan karier yang sesuai dengan <span class="font-medium text-blue-600 dark:text-blue-400">minat</span>,
-              <span class="font-medium text-blue-600 dark:text-blue-400">bakat</span>, dan potensi terbaik dalam dirimu.
-            </p>
-          </header>
-          <a href="#/karier" class="neon-btn inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full transition">
-            <i class="fas fa-bullseye mr-2"></i> Prediksi Karier Kamu
-          </a>
-        </div>
+<section aria-labelledby="career-heading"
+         data-animate="slide-up"
+         class="neon-box bg-gradient-to-br from-white via-blue-50 to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 py-16 px-6 md:px-12 rounded-3xl transition-colors duration-500 opacity-0 will-change-transform">
+  <div class="flex flex-col-reverse md:flex-row items-center gap-12">
+    <div class="flex-1 text-center md:text-left">
+      <header>
+        <h1 id="career-heading" class="text-4xl md:text-5xl font-extrabold text-blue-700 dark:text-blue-300 mb-6">
+          Karier Impianmu
+        </h1>
+        <p class="text-gray-700 dark:text-gray-200 text-base md:text-lg mb-8 leading-relaxed">
+          Temukan berbagai pilihan karier yang sesuai dengan
+          <span class="font-semibold text-blue-600 dark:text-blue-400">minat</span>,
+          <span class="font-semibold text-blue-600 dark:text-blue-400">bakat</span>, dan potensi terbaik dalam dirimu.
+        </p>
+      </header>
+      <a href="#/karier" class="neon-btn inline-block mt-4 px-6 py-3 bg-blue-600 text-white text-base font-semibold rounded-full transition hover:scale-105">
+        <i class="fas fa-bullseye mr-2"></i> Prediksi Karier Kamu
+      </a>
+    </div>
 
-        <div class="flex-1">
-          <div class="neon-box overflow-hidden rounded-xl hover:scale-[1.03] transition" style="box-shadow: 0 0 10px rgba(37,99,235,0.4);">
-            <img src="/images/karir.jpg" alt="Karier Impian" class="w-full h-auto object-cover" />
-          </div>
-        </div>
+    <div class="flex-1">
+      <div class="neon-box overflow-hidden rounded-2xl hover:scale-105 transition shadow-lg shadow-blue-300/40 dark:shadow-blue-500/30">
+        <img src="/images/karir.png" alt="Karier Impian" class="w-full h-auto object-cover max-h-[400px] md:max-h-[500px]" />
       </div>
-    </section>
+    </div>
+  </div>
+</section>
+
+
 
     <!-- Section: Intro Jurusan -->
     <section aria-labelledby="major-heading"
@@ -80,6 +83,36 @@ export default class HomePage {
       <div id="content-loading-container" class="mb-4" role="status" aria-live="polite"></div>
       <article id="content" class="space-y-10 animate-fadeIn min-h-[300px]" aria-live="polite"></article>
     </section>
+
+    <section aria-label="Navigasi dan Hasil Rekomendasi Fitur"
+         data-animate="slide-up"
+         class="neon-box bg-gray-100 dark:bg-gray-900 py-10 px-2 md:px-4 rounded-2xl transition-colors duration-300 opacity-0 will-change-transform">
+
+  <!-- Navigasi Tab Fitur -->
+  <nav aria-label="Navigasi Tab Fitur"
+       class="flex flex-wrap justify-center gap-4 text-base md:text-lg font-semibold text-gray-700 dark:text-gray-200 mb-6">
+
+    <button id="frontendNav"
+            class="nav-btn hover:text-blue-600 hover:border-blue-600 pb-1 border-b-2 border-transparent transition">
+      Front-end
+    </button>
+    <button id="backendNav"
+            class="nav-btn hover:text-blue-600 hover:border-blue-600 pb-1 border-b-2 border-transparent transition">
+      Back-end
+    </button>
+    <button id="mlNav"
+            class="nav-btn hover:text-blue-600 hover:border-blue-600 pb-1 border-b-2 border-transparent transition">
+      Machine Learning
+    </button>
+  </nav>
+
+  <!-- Konten Fitur -->
+  <div id="fitur-loading-container" class="mb-4" role="status" aria-live="polite"></div>
+  <article id="fitur-content" class="space-y-10 animate-fadeIn min-h-[300px]" aria-live="polite"></article>
+</section>
+
+
+    
 
   </div>
 </div>

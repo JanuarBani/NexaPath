@@ -1,7 +1,7 @@
 import { precache } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
-import { NetworkFirst, CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
+import { NetworkFirst, CacheFirst } from 'workbox-strategies';
 import CONFIG from './config';
 
 // ✅ Hanya gunakan `precache()` untuk InjectManifest
@@ -46,44 +46,3 @@ registerRoute(
     plugins: [new CacheableResponsePlugin({ statuses: [0, 200] })],
   }),
 );
-
-// 🖼️ API: Gambar
-registerRoute(
-  ({ request, url }) => {
-    const apiOrigin = new URL(CONFIG.BASE_URL).origin;
-    return url.origin === apiOrigin && request.destination === 'image';
-  },
-  new StaleWhileRevalidate({
-    cacheName: 'story-api-images',
-    plugins: [new CacheableResponsePlugin({ statuses: [0, 200] })],
-  }),
-);
-
-// 🗺️ MapTiler
-registerRoute(
-  ({ url }) => url.origin.includes('maptiler'),
-  new CacheFirst({
-    cacheName: 'maptiler-api',
-    plugins: [new CacheableResponsePlugin({ statuses: [0, 200] })],
-  }),
-);
-
-// 🔔 Push Notifications
-self.addEventListener('push', (event) => {
-  console.log('Push notification diterima...');
-
-  event.waitUntil(
-    (async () => {
-      try {
-        const data = event.data ? await event.data.json() : {};
-        await self.registration.showNotification(data.title || 'Notifikasi', {
-          body: data.options?.body || 'Ada pesan baru.',
-          icon: data.options?.icon || '/favicon.png',
-          data: data.options?.data || {},
-        });
-      } catch (err) {
-        console.error('Gagal memproses push notification:', err);
-      }
-    })(),
-  );
-});

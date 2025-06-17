@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Awal dropdown hidden */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background: rgba(255 255 255 / 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  border-radius: 0.5rem;
+  margin-top: 0.25rem;
+  padding: 0.5rem 0;
+  width: 11rem;
+  transition: opacity 0.3s;
+  z-index: 50;
+}
+
+/* Saat li open */
+li.open > .dropdown-menu {
+  display: block;
+}
+
 /* scroll-animation.css */
 @keyframes slideUpFade {
   0% {
@@ -24,6 +46,33 @@
 .animate-slide-up {
   animation: slideUpFade 0.8s ease-out forwards;
   will-change: transform, opacity;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
 }
 
 .neon-text {

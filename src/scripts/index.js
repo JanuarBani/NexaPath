@@ -3,15 +3,27 @@ import '../styles/styles.css';
 
 import App from './pages/app';
 import { registerServiceWorker } from './utils';
-import { generateNavLinksTemplate } from './templates';
+import {
+  generateNavLinksTemplate,
+  loadFrontendTemplate,
+  loadBackendTemplate,
+  loadMachineLearningTemplate,
+} from './templates';
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // Render navbar links
   const mainNavbar = document.getElementById('main-navbar');
   const mobileLinks = document.getElementById('mobile-links');
 
   if (mobileLinks) mobileLinks.innerHTML = generateNavLinksTemplate(true);
   if (mainNavbar) mainNavbar.innerHTML = generateNavLinksTemplate(false);
+
+  if (mobileLinks) {
+    mobileLinks.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        closeDrawer();
+      });
+    });
+  }
 
   // Handle skip link and main content
   const content = document.querySelector('#main-content');
@@ -90,6 +102,29 @@ document.addEventListener('DOMContentLoaded', async () => {
       header.classList.toggle('scrolled', window.scrollY > 10);
     });
   }
+
+  document.getElementById('frontendNav')?.addEventListener('click', () => {
+    const content = document.getElementById('fitur-content');
+    if (content) {
+      content.innerHTML = loadFrontendTemplate();
+    }
+  });
+
+  document.getElementById('backendNav')?.addEventListener('click', () => {
+    const content = document.getElementById('fitur-content');
+    if (content) {
+      content.innerHTML = loadBackendTemplate();
+    }
+  });
+
+  document.getElementById('mlNav')?.addEventListener('click', () => {
+    const content = document.getElementById('fitur-content');
+    if (content) {
+      content.innerHTML = loadMachineLearningTemplate();
+    }
+  });
+
+  document.getElementById('frontendNav')?.click();
 });
 
 // Scroll animation using Intersection Observer
