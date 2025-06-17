@@ -211,25 +211,27 @@ export default class HomePage {
     container.innerHTML = groupedCareers
       .map(
         ({ industry, careers }) => `
-  <section class="mb-10 p-4 md:p-6 rounded-2xl bg-white dark:bg-gray-800 shadow transition-colors duration-300">
-    <h2 class="text-2xl font-bold text-gray-900 dark:text-white inline-block border-b-4 border-blue-600 pb-1 mb-5">
-      ${industry}
-    </h2>
+<section class="mb-10 p-4 md:p-6 rounded-2xl bg-white dark:bg-gray-800 shadow transition-colors duration-300">
+  <h2 class="text-2xl font-bold text-gray-900 dark:text-white inline-block border-b-4 border-blue-600 pb-1 mb-5">
+    ${industry}
+  </h2>
 
-    <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-      ${careers
-        .map(
-          ({ name, description, image }) => `
-        <li class="neon-box bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl p-4 shadow-sm transform transition duration-300 hover:shadow-lg hover:scale-105 cursor-pointer text-center flex flex-col items-center">
-          <img src="${image}" alt="${name}" class="w-24 sm:w-28 md:w-32 aspect-square object-cover rounded-xl mb-4 shadow-sm transition-transform duration-300" />
+  <ul class="grid grid-cols-1 gap-4">
+    ${careers
+      .map(
+        ({ name, description, image }) => `
+      <li class="neon-box bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl p-4 shadow-sm transform transition duration-300 hover:shadow-lg hover:scale-105 cursor-pointer flex flex-col sm:flex-row items-center sm:items-start gap-4 text-left">
+        <img src="${image}" alt="${name}" class="w-24 sm:w-28 md:w-32 aspect-square object-cover rounded-xl shadow-sm transition-transform duration-300" />
+        <div>
           <h3 class="text-blue-700 dark:text-blue-400 font-semibold text-lg mb-1">${name}</h3>
           <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">${description}</p>
-        </li>
-      `,
-        )
-        .join('')}
-    </ul>
-  </section>
+        </div>
+      </li>
+    `,
+      )
+      .join('')}
+  </ul>
+</section>
 `,
       )
       .join('');
@@ -265,12 +267,35 @@ export default class HomePage {
 `;
   }
 
-  populateMajorListError(message) {
+  populateMajorList(majors) {
     const container = document.getElementById('content');
-    if (container) {
-      container.innerHTML = `
-        <p class="text-red-600 font-semibold">Gagal memuat jurusan: ${message}</p>
-      `;
+    if (!container) return;
+
+    if (!Array.isArray(majors) || majors.length === 0) {
+      container.innerHTML = `<p class="text-gray-500 dark:text-gray-400 italic text-center mt-6">Belum ada data jurusan.</p>`;
+      return;
     }
+
+    container.innerHTML = `
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center inline-block border-b-4 border-blue-600 pb-1 mb-6">
+      Daftar Jurusan Populer
+    </h2>
+
+    <ul class="grid grid-cols-1 gap-4">
+      ${majors
+        .map(
+          ({ name, description, image }) => `
+        <li class="neon-box group bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl p-4 shadow-sm hover:shadow-md hover:bg-blue-50 dark:hover:bg-gray-600 transition duration-300 cursor-pointer flex flex-col sm:flex-row items-center sm:items-start gap-4 text-left">
+          <img src="${image}" alt="${name}" class="w-24 sm:w-28 md:w-32 aspect-square object-cover rounded-xl shadow-sm group-hover:scale-105 transition-transform duration-300" />
+          <div>
+            <h3 class="text-gray-900 dark:text-white font-semibold text-lg mb-1">${name}</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">${description}</p>
+          </div>
+        </li>
+      `,
+        )
+        .join('')}
+    </ul>
+  `;
   }
 }
